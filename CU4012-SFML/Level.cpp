@@ -1,5 +1,5 @@
 #include "Level.h"
-Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs,sf::View* v, World* w, TileManager* tm, AudioManager* am)
+Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs,sf::View* v, World* w, TileManager* tm)
 {
 	window = hwnd;
 	input = in;
@@ -7,12 +7,22 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs,sf::View* v, World
 	view = v;
 	world = w;	
 	tileManager = tm;
-	audioManager = am;
+	audioManager = new AudioManager();
 }
 
 Level::~Level()
 {
-
+	//Making pointers null
+	window = nullptr;
+	input = nullptr;
+	gameState = nullptr;
+	view = nullptr;
+	world = nullptr;
+	tileManager = nullptr;
+	if (audioManager != nullptr) {
+		delete audioManager;
+		audioManager = nullptr;
+	}
 }
 
 void Level::handleInput(float dt)
@@ -32,6 +42,13 @@ void Level::handleInput(float dt)
 void Level::update(float dt)
 {
 
+	//Move the view to follow the player
+	//view->setCenter(view->getCenter().x, 360);
+	//
+	//sf::Vector2f playerPosition = player.getPosition();
+	//float newX = std::max(playerPosition.x, view->getSize().x / 2.0f);
+	//view->setCenter(newX, view->getCenter().y);
+	//window->setView(*view);
 }
 
 // Render level

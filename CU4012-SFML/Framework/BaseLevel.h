@@ -32,6 +32,5 @@ protected:
 	sf::View* view;
 	TileManager* tileManager;
 	AudioManager* audioManager;
-
 };
 
