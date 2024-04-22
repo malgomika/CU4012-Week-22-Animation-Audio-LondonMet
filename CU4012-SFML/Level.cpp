@@ -8,6 +8,20 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs,sf::View* v, World
 	world = w;	
 	tileManager = tm;
 	audioManager = new AudioManager();
+
+	//zmb.setInput(input);
+	//zmb.setAudio(audioManager);
+
+	italian.setInput(input);
+	italian.setAudio(audioManager);
+
+	//world->AddGameObject(zmb); get out of my house
+
+	world->AddGameObject(italian);
+	audioManager->addMusic("sfx/tidaltemp_past.ogg", "bgm");
+	audioManager->addSound("sfx/smb_jump-super.wav", "jump"); //this is a train wreck
+	audioManager->playMusicbyName("bgm");
+
 }
 
 Level::~Level()
@@ -36,6 +50,7 @@ void Level::handleInput(float dt)
 		input->setKeyUp(sf::Keyboard::Tab);
 		gameState->setCurrentState(State::TILEEDITOR);
 	}
+	italian.handleInput(dt);
 }
 
 // Update game objects
@@ -43,12 +58,14 @@ void Level::update(float dt)
 {
 
 	//Move the view to follow the player
-	//view->setCenter(view->getCenter().x, 360);
-	//
-	//sf::Vector2f playerPosition = player.getPosition();
-	//float newX = std::max(playerPosition.x, view->getSize().x / 2.0f);
-	//view->setCenter(newX, view->getCenter().y);
-	//window->setView(*view);
+	view->setCenter(view->getCenter().x, 360);
+	
+	sf::Vector2f playerPosition = italian.getPosition();
+	float newX = std::max(playerPosition.x, view->getSize().x / 2.0f);
+	view->setCenter(newX, view->getCenter().y);
+	window->setView(*view);
+
+	//zmb.update(dt);
 }
 
 // Render level
@@ -56,6 +73,7 @@ void Level::render()
 {
 	beginDraw();
 	tileManager->render(false);
+	window->draw(italian);
 	endDraw();
 }
 
