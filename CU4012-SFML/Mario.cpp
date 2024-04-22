@@ -37,23 +37,19 @@ void Mario::handleInput(float dt)
 	if (input->isKeyDown(sf::Keyboard::A))
 	{
 		velocity.x = -speed;
-		currentAnimation = &swim;
-		currentAnimation->animate(dt);
+		currentAnimation = &walk;
 		currentAnimation->setFlipped(true);
 	}
 	else if (input->isKeyDown(sf::Keyboard::D))
 	{
 		velocity.x = speed;
-		currentAnimation = &swim;
-		currentAnimation->animate(dt);
+		currentAnimation = &walk;
 		currentAnimation->setFlipped(false);
 	}
 	else if(input->isKeyDown(sf::Keyboard::S))
 	{
 		currentAnimation = &duck;
-		currentAnimation->animate(dt);
 	}
-
 	else
 	{
 		currentAnimation->reset();
@@ -66,4 +62,5 @@ void Mario::handleInput(float dt)
 		audio->playSoundbyName("jump");
 	}
 
+	currentAnimation->animate(dt);
 }
